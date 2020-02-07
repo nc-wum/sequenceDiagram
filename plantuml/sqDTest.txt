@@ -1,0 +1,58 @@
+@startuml
+!pragma teoz true
+
+Header NextCapital 
+Footer Page %page% of %lastpage%
+Title Under Browser 2 | Sequence Diagram
+
+Participant "User" as User #white
+Participant "Under Browser 2" as UB2 #white
+Participant "User Seeder Tools" as UST #white
+Participant "Local Cache" as LC #white
+Participant "Test User Manager" as TUM #white
+Participant "JS API Client" as API #white
+Participant "AppServer" as AS #white
+
+
+== BUILD TEST TABLE ==
+
+User -[#009af1]> UB2: Run Command
+rnote over UB2 : Create Test Table
+UB2 -> UB2 : Test Filter
+rnote over UB2 : Filtered Tests 
+
+Group Cached Personas Do Not Exist
+autonumber "<b>[000]" 
+
+Activate UB2 #009af1
+
+UB2 -[#009af1]> TUM: Fetch Personas
+TUM -[#009af1]> UB2: Personas
+UB2 -[#009af1]> LC: Personas
+
+autonumber stop
+Activate LC #009af1
+End
+
+rnote over UB2 : Expected Data 
+rnote over LC : Personas
+
+Group Cached Personas Exist
+autonumber "<b>[000]" 
+UB2 -[#009af1]> LC: Request Personas
+LC -[#009af1]> UB2: Cached Personas
+
+autonumber stop
+Deactivate UB2
+Deactivate LC
+End
+
+UB2 -> UB2 : Persona Filter
+rnote over UB2 : Final Test Table
+
+
+== LOAD FIXTURES FOR EACH TEST SUITE ==
+
+|||
+
+@enduml
