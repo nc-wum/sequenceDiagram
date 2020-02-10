@@ -55,4 +55,63 @@ rnote over UB2 : Final Test Table
 
 |||
 
+Group Cached Fixtures Do Not Exist
+autonumber "<b>[000]" 
+
+Activate UB2 #009af1
+
+UB2 -[#009af1]> TUM: Request Expected Data
+TUM -[#009af1]> UB2: Expected Data
+UB2 -[#009af1]> LC: Expected Data
+
+autonumber stop
+Activate LC #009af1
+End
+
+rnote over UB2 : Expected Data 
+rnote over LC : Fixtures
+
+Group Cached Fixtures Exist
+autonumber "<b>[000]" 
+UB2 -[#009af1]> LC: Request Expected Data
+LC -[#009af1]> UB2: Cached Data
+
+autonumber stop
+Deactivate UB2
+Deactivate LC
+End
+
+== SEED USER AND LOG IN ==
+Activate UB2 #009af1
+rnote over UB2 : Generate UUID 
+UB2 -[#009af1]> UST: UUID, Email, Persona
+Deactivate UB2
+
+UST -[#009af1]> AS: Request for User
+AS -[#009af1]> UST: Test User
+UST -[#009af1]> UB2: Test User
+UB2 -[#009af1]> API: Request to Log In
+
+== RUN TEST==
+
+API -[#009af1]> AS: Request to Log in
+Activate UB2 #009af1
+
+UB2 -[#009af1]> TUM: Run Test for Persona
+rnote over UB2 : Assertion
+API -[#009af1]> AS: Generate Actual Data
+AS -[#009af1]> UB2: Actual Data
+
+UB2 -[#009af1]> API: Request to Destroy User
+API -[#009af1]> AS: Destroy User
+Deactivate UB2
+UB2 -[#009af1]> UB2: Aggregate Results
+
+
+Activate UB2 #009af1
+UB2 -[#009af1]> User: Overview Test Report
+rnote over UB2 : Test Report
+UB2 -[#009af1]> User: GranularTest Report
+Deactivate UB2
+
 @enduml
